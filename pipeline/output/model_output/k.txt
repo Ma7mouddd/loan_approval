@@ -1,0 +1,20 @@
+Best Hyperparameters:
+criterion: gini
+max_depth: 10
+min_samples_leaf: 4
+min_samples_split: 10
+
+Best ROC-AUC Score during cross-validation: 0.9596922961222962
+
+Test Set Evaluation Metrics:
+ROC-AUC Score: 0.8523952799335226
+
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.93      0.97      0.95      6987
+           1       0.89      0.73      0.80      2010
+
+    accuracy                           0.92      8997
+   macro avg       0.91      0.85      0.88      8997
+weighted avg       0.92      0.92      0.92      8997
