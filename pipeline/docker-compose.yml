@@ -1,0 +1,43 @@
+services:
+  data_processing:
+    build:
+      context: .
+      dockerfile: project.dockerfile
+    container_name: data_processing
+    volumes:
+      - ./output:/project/output
+    command: /bin/bash -c "
+      python load.py &&
+      cp /project/res_dpre.csv /project/output/final.csv"
+
+  model_training:
+    build:
+      context: .
+      dockerfile: project.dockerfile
+    container_name: model_training
+    volumes:
+      - ./output:/project/output
+    depends_on:
+      - data_processing
+    entrypoint: /bin/bash -c "
+      while [ ! -f /project/output/final.csv ]; do
+        echo 'Waiting for /project/output/res_dpre.csv to be created...';
+        sleep 5;
+      done &&
+      python model.py /project/output/final.csv"
+
+  model_training_1:
+    build:
+      context: .
+      dockerfile: project.dockerfile
+    container_name: model_training_1
+    volumes:
+      - ./output:/project/output
+    depends_on:
+      - data_processing
+    entrypoint: /bin/bash -c "
+      while [ ! -f /project/output/final.csv ]; do
+        echo 'Waiting for /project/output/res_dpre.csv to be created...';
+        sleep 5;
+      done &&
+      python model.py /project/output/final.csv"
